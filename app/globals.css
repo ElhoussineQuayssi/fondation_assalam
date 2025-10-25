@@ -1,0 +1,174 @@
+@import "../styles/design-tokens.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design System Variables: Minimalist Light Blue */
+:root {
+  --color-primary: #b0e0e6; /* Powder Blue - Primary color */
+  --color-accent: #6495ed; /* Cornflower Blue - Accent color */
+  --color-text: #333333; /* Dark Gray - Text color */
+  --color-background: #fafafa; /* Off-White - Background color */
+  --color-primary-light: #b0e0e6; /* Light primary for backgrounds */
+  --color-surface: #ffffff; /* White for card surfaces */
+  --color-border: #e5e7eb; /* Light border color */
+  --font-poppins: "Poppins", sans-serif;
+}
+
+/* Performance optimizations */
+html {
+  scroll-behavior: smooth;
+  /* Optimize font loading */
+  font-display: swap;
+}
+
+body {
+  font-family: var(--font-poppins);
+  overflow-x: hidden;
+  /* Optimize rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Critical CSS for above-the-fold content */
+.above-the-fold {
+  content-visibility: visible;
+}
+
+.below-the-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
+}
+
+/* Optimize images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Reduce layout shift */
+.image-placeholder {
+  aspect-ratio: 16/9;
+  background-color: var(--color-primary-light);
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Pour corriger le header fixed */
+.pt-header {
+  padding-top: 5rem;
+}
+
+/* Styles pour sections avec pattern de fond - Updated for Minimalist Light Blue consistency */
+.moroccan-pattern {
+  /* FIX: Use design system color for background */
+  background-color: var(--color-primary-light);
+  /* FIX: Use ACCENT color (#6495ED) at low opacity for the SVG fill */
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236495ED' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Animation pour les cartes et éléments interactifs */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+/* Styles pour les boutons secondaire */
+/* FIX: Refactored to pure CSS using var() to avoid Tailwind JIT issues with custom colors */
+.btn-secondary {
+  background-color: white; /* bg-white */
+  color: var(--color-accent); /* text-accent */
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s;
+  border: 2px solid transparent; /* Ensure border compatibility */
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary-light); /* hover:bg-primary-light */
+  color: var(--color-accent); /* Maintain text color */
+}
+
+.btn-secondary:focus {
+  /* Simulate focus:ring-accent */
+  box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.5); /* 0.5 opacity of ACCENT */
+  outline: none;
+}
+
+/* Éléments marocains - styles pour motifs décoratifs */
+.moroccan-border {
+  /* FIX: Use PRIMARY_LIGHT color (#B0E0E6) at 0.3 opacity for the SVG fill, encoded as %23B0E0E6 */
+  border-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23B0E0E6' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E")
+    20;
+  border-width: 4px;
+  border-style: solid;
+}
+
+/* Contact form input focus styles - moved from styled-jsx to avoid conflicts */
+.contact-form-input:focus {
+  border-color: #6495ed !important; /* ACCENT color */
+  box-shadow: 0 0 0 2px rgba(100, 149, 237, 0.25); /* ACCENT color with opacity */
+}
+
+/* Animation keyframes for AboutHeader - moved from styled-jsx to avoid conflicts */
+@keyframes stagger-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-slow { animation: pulse-slow 6s infinite ease-in-out; }
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Blog content styles - moved from styled-jsx to avoid conflicts */
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4 {
+  color: #6495ed !important; /* ACCENT color */
+}
+.blog-content p,
+.blog-content li,
+.blog-content blockquote {
+  color: #333333 !important; /* DARK_TEXT color */
+  line-height: 1.75;
+}
+.blog-content a {
+  color: #6495ed !important; /* ACCENT color */
+  text-decoration: underline;
+/* Loading animation keyframes */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes progress {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in-out;
+}
+
+.animate-progress {
+  animation: progress 2s ease-in-out;
+}
+}

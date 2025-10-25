@@ -1,0 +1,115 @@
+<best_practices>
+  <general_principles>
+    <principle priority="high">
+      <name>Design System First</name>
+      <description>Always establish design tokens and CSS custom properties before implementing components</description>
+      <rationale>Ensures consistency across all UI elements and makes maintenance easier</rationale>
+      <example>
+        <scenario>Starting a new component implementation</scenario>
+        <good>Define colors, spacing, and typography variables first</good>
+        <bad>Hard-code values directly in component styles</bad>
+      </example>
+    </principle>
+
+    <principle priority="high">
+      <name>Mobile-First Responsive Design</name>
+      <description>Design for mobile devices first, then enhance for larger screens</description>
+      <rationale>Ensures optimal experience on all devices and prevents mobile issues</rationale>
+      <example>
+        <scenario>Creating a responsive layout</scenario>
+        <good>Use fluid typography with clamp() and mobile-first breakpoints</good>
+        <bad>Design desktop first and add mobile fixes later</bad>
+      </example>
+    </principle>
+
+    <principle priority="high">
+      <name>Accessibility by Default</name>
+      <description>Build accessibility features into components from the start</description>
+      <rationale>Reduces remediation costs and ensures inclusive user experience</rationale>
+      <example>
+        <scenario>Adding interactive elements</scenario>
+        <good>Include ARIA labels, keyboard navigation, and focus management</good>
+        <bad>Add accessibility as an afterthought</bad>
+      </example>
+    </principle>
+  </general_principles>
+
+  <code_conventions>
+    <convention category="css_custom_properties">
+      <rule>Use CSS custom properties for all design tokens</rule>
+      <examples>
+        <good>--color-primary: #007bff; --spacing-md: 1rem;</good>
+        <bad>color: #007bff; margin: 16px;</bad>
+      </examples>
+    </convention>
+
+    <convention category="semantic_html">
+      <rule>Use semantic HTML elements with proper hierarchy</rule>
+      <template>
+        <header>
+          <nav>
+            <ul>
+              <li><a href="#">Link</a></li>
+            </ul>
+          </nav>
+        </header>
+        <main>
+          <section>
+            <h2>Heading</h2>
+            <p>Content</p>
+          </section>
+        </main>
+      </template>
+    </convention>
+
+    <convention category="responsive_breakpoints">
+      <rule>Use consistent breakpoint strategy</rule>
+      <template>
+        --breakpoint-mobile: 768px;
+        --breakpoint-tablet: 1024px;
+        --breakpoint-desktop: 1200px;
+      </template>
+    </convention>
+  </code_conventions>
+
+  <common_pitfalls>
+    <pitfall>
+      <description>Insufficient color contrast</description>
+      <why_problematic>Violates WCAG guidelines and makes content hard to read</why_problematic>
+      <correct_approach>Use contrast checking tools and ensure 4.5:1 ratio minimum</correct_approach>
+    </pitfall>
+
+    <pitfall>
+      <description>Missing keyboard navigation</description>
+      <why_problematic>Excludes users who cannot use a mouse</why_problematic>
+      <correct_approach>Test all interactive elements with Tab key and implement proper focus management</correct_approach>
+    </pitfall>
+
+    <pitfall>
+      <description>Fixed widths instead of responsive units</description>
+      <why_problematic>Content doesn't adapt to different screen sizes</why_problematic>
+      <correct_approach>Use percentages, viewport units, and fluid typography</correct_approach>
+    </pitfall>
+  </common_pitfalls>
+
+  <quality_checklist>
+    <category name="accessibility">
+      <item>Color contrast meets WCAG 4.5:1 minimum</item>
+      <item>All interactive elements support keyboard navigation</item>
+      <item>Semantic HTML with proper ARIA labels</item>
+      <item>Screen reader compatibility verified</item>
+    </category>
+    <category name="responsive_design">
+      <item>Mobile-first approach implemented</item>
+      <item>Content reflows naturally across breakpoints</item>
+      <item>Touch targets are at least 44px</item>
+      <item>Fluid typography using clamp() functions</item>
+    </category>
+    <category name="performance">
+      <item>CSS is optimized and minified</item>
+      <item>Lazy loading implemented where appropriate</item>
+      <item>Animations respect reduced motion preferences</item>
+      <item>Loading and error states are handled</item>
+    </category>
+  </quality_checklist>
+</best_practices>

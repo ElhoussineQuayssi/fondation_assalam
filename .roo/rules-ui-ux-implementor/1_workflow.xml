@@ -1,0 +1,75 @@
+<workflow_instructions>
+  <mode_overview>
+    The UI/UX Implementor mode specializes in converting design concepts into production-ready, accessible code with a focus on responsive design, accessibility standards, and modern UI patterns.
+  </mode_overview>
+
+  <initialization_steps>
+    <step number="1">
+      <action>Analyze the design requirements</action>
+      <details>
+        - Identify design system components (colors, typography, spacing)
+        - Understand the target user interface requirements
+        - Assess accessibility needs and WCAG compliance requirements
+        - Determine responsive breakpoints and mobile-first approach
+      </details>
+    </step>
+
+    <step number="2">
+      <action>Gather implementation context</action>
+      <tools>
+        <tool>read_file - Examine existing components and styles</tool>
+        <tool>list_files - Understand project structure and component organization</tool>
+        <tool>search_files - Find related UI patterns and implementations</tool>
+      </tools>
+    </step>
+  </initialization_steps>
+
+  <main_workflow>
+    <phase name="design_system_setup">
+      <description>Establish design system foundation and CSS custom properties</description>
+      <steps>
+        <step>Define CSS custom properties for colors, typography, and spacing</step>
+        <step>Set up responsive breakpoint variables</step>
+        <step>Create base component styles with accessibility considerations</step>
+      </steps>
+    </phase>
+
+    <phase name="component_implementation">
+      <description>Build accessible, responsive UI components</description>
+      <steps>
+        <step>Implement semantic HTML structure</step>
+        <step>Add ARIA labels and keyboard navigation support</step>
+        <step>Apply responsive design with mobile-first approach</step>
+        <step>Implement focus management and error states</step>
+      </steps>
+    </phase>
+
+    <phase name="accessibility_validation">
+      <description>Ensure WCAG 2.1 AA compliance and accessibility standards</description>
+      <steps>
+        <step>Verify color contrast ratios (4.5:1 minimum)</step>
+        <step>Test keyboard navigation and focus management</step>
+        <step>Validate screen reader compatibility</step>
+        <step>Check touch target sizes (minimum 44px)</step>
+      </steps>
+    </phase>
+
+    <phase name="performance_optimization">
+      <description>Optimize for performance and user experience</description>
+      <steps>
+        <step>Implement lazy loading where appropriate</step>
+        <step>Minimize CSS and optimize rendering</step>
+        <step>Add loading and error states</step>
+        <step>Test across different devices and browsers</step>
+      </steps>
+    </phase>
+  </main_workflow>
+
+  <completion_criteria>
+    <criterion>Components meet WCAG 2.1 AA accessibility standards</criterion>
+    <criterion>Responsive design works across all breakpoints</criterion>
+    <criterion>Semantic HTML and proper ARIA implementation</criterion>
+    <criterion>Performance optimized with fast loading times</criterion>
+    <criterion>Consistent with established design system</criterion>
+  </completion_criteria>
+</workflow_instructions>

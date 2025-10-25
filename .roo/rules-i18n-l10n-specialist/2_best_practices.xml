@@ -1,0 +1,113 @@
+<best_practices>
+  <general_principles>
+    <principle priority="high">
+      <name>Context-Aware Translation Keys</name>
+      <description>Use descriptive, context-aware translation keys that help translators understand usage</description>
+      <rationale>Improves translation quality and reduces ambiguity</rationale>
+      <example>
+        <scenario>Naming translation keys for UI elements</scenario>
+        <good>nav.main.home, button.save_changes, error.field_required</good>
+        <bad>text1, btn1, err1</bad>
+      </example>
+    </principle>
+
+    <principle priority="high">
+      <name>Pluralization Support</name>
+      <description>Implement proper pluralization rules for all languages</description>
+      <rationale>Different languages have different pluralization rules (English: singular/plural, Arabic: singular/dual/plural)</rationale>
+      <example>
+        <scenario>Handling item counts</scenario>
+        <good>Use ICU pluralization: {count, plural, one {# item} other {# items}}</good>
+        <bad>Simple if-else logic that only works for English</bad>
+      </example>
+    </principle>
+
+    <principle priority="high">
+      <name>RTL Language Support</name>
+      <description>Design layouts that support right-to-left languages</description>
+      <rationale>Proper RTL support requires layout changes, not just text direction</rationale>
+      <example>
+        <scenario>Navigation layout</scenario>
+        <good>Use logical CSS properties and test RTL layouts</good>
+        <bad>Hard-coded left/right positioning</bad>
+      </example>
+    </principle>
+  </general_principles>
+
+  <code_conventions>
+    <convention category="translation_keys">
+      <rule>Use dot notation with descriptive namespaces</rule>
+      <examples>
+        <good>auth.login.title, dashboard.welcome.message</good>
+        <bad>loginTitle, welcomeMessage</bad>
+      </examples>
+    </convention>
+
+    <convention category="file_structure">
+      <rule>Organize translation files by locale</rule>
+      <template>
+        locales/
+        ├── en/
+        │   ├── common.json
+        │   ├── auth.json
+        │   └── dashboard.json
+        ├── fr/
+        │   ├── common.json
+        │   ├── auth.json
+        │   └── dashboard.json
+        └── ar/
+            ├── common.json
+            ├── auth.json
+            └── dashboard.json
+      </template>
+    </convention>
+
+    <convention category="interpolation">
+      <rule>Use ICU message format for complex strings</rule>
+      <template>
+        "greeting": "Hello {name}, you have {count, plural, one {# message} other {# messages}}"
+      </template>
+    </convention>
+  </code_conventions>
+
+  <common_pitfalls>
+    <pitfall>
+      <description>Concatenating translated strings</description>
+      <why_problematic>Word order varies by language, breaking translations</why_problematic>
+      <correct_approach>Use interpolation with ICU message format</correct_approach>
+    </pitfall>
+
+    <pitfall>
+      <description>Hard-coded date/number formats</description>
+      <why_problematic>Different locales use different formats</why_problematic>
+      <correct_approach>Use Intl.DateTimeFormat and Intl.NumberFormat</correct_approach>
+    </pitfall>
+
+    <pitfall>
+      <description>Ignoring text expansion</description>
+      <why_problematic>Translations can be 30-40% longer than English</why_problematic>
+      <correct_approach>Design layouts that accommodate text expansion</correct_approach>
+    </pitfall>
+  </common_pitfalls>
+
+  <quality_checklist>
+    <category name="implementation">
+      <item>All user-facing strings are extracted to translation files</item>
+      <item>Pluralization rules implemented for target languages</item>
+      <item>RTL languages properly supported</item>
+      <item>Translation keys are descriptive and context-aware</item>
+    </category>
+    <category name="functionality">
+      <item>Language switching works without page reload</item>
+      <item>Missing keys show appropriate fallbacks</item>
+      <item>Dynamic content updates with language changes</item>
+      <item>SEO-friendly URLs for different languages</item>
+    </category>
+    <category name="localization">
+      <item>Dates formatted according to locale conventions</item>
+      <item>Numbers and currencies display correctly</item>
+      <item>Cultural adaptations considered (colors, icons, etc.)</item>
+      <item>Text expansion accommodated in layouts</item>
+    </category>
+  </quality_checklist>
+</best_practices>

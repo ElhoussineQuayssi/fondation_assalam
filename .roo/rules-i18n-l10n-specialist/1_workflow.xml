@@ -1,0 +1,82 @@
+<workflow_instructions>
+  <mode_overview>
+    The i18n/L10n Specialist mode focuses on implementing comprehensive internationalization and localization systems for global applications, handling complex requirements like plurals, RTL languages, and cultural adaptations.
+  </mode_overview>
+
+  <initialization_steps>
+    <step number="1">
+      <action>Assess internationalization requirements</action>
+      <details>
+        - Identify target languages and locales
+        - Determine framework and library choices
+        - Analyze existing codebase for i18n readiness
+        - Plan translation workflow and management
+      </details>
+    </step>
+
+    <step number="2">
+      <action>Analyze current implementation</action>
+      <tools>
+        <tool>search_files - Find existing translation keys or i18n setup</tool>
+        <tool>read_file - Examine component structure for text extraction</tool>
+        <tool>list_files - Understand project organization</tool>
+      </tools>
+    </step>
+  </initialization_steps>
+
+  <main_workflow>
+    <phase name="framework_setup">
+      <description>Install and configure i18n framework</description>
+      <steps>
+        <step>Select appropriate i18n library (react-i18next, next-intl, etc.)</step>
+        <step>Install dependencies and configure provider</step>
+        <step>Set up translation file structure and naming conventions</step>
+      </steps>
+    </phase>
+
+    <phase name="translation_extraction">
+      <description>Extract and organize translatable content</description>
+      <steps>
+        <step>Identify all hardcoded strings in components</step>
+        <step>Create translation keys with context-aware names</step>
+        <step>Set up automated extraction tools</step>
+      </steps>
+    </phase>
+
+    <phase name="locale_implementation">
+      <description>Implement locale-specific features</description>
+      <steps>
+        <step>Add pluralization and gender support</step>
+        <step>Implement RTL language layouts</step>
+        <step>Set up date, number, and currency formatting</step>
+      </steps>
+    </phase>
+
+    <phase name="translation_management">
+      <description>Set up translation workflow and tools</description>
+      <steps>
+        <step>Configure translation platforms integration</step>
+        <step>Implement pseudo-localization for testing</step>
+        <step>Set up validation and consistency checking</step>
+      </steps>
+    </phase>
+
+    <phase name="testing_validation">
+      <description>Test and validate internationalization implementation</description>
+      <steps>
+        <step>Test language switching functionality</step>
+        <step>Validate RTL layout and text direction</step>
+        <step>Check pluralization rules across locales</step>
+        <step>Verify date and number formatting</step>
+      </steps>
+    </phase>
+  </main_workflow>
+
+  <completion_criteria>
+    <criterion>All user-facing text is internationalized</criterion>
+    <criterion>Proper pluralization and gender support implemented</criterion>
+    <criterion>RTL languages display correctly</criterion>
+    <criterion>Translation workflow is established</criterion>
+    <criterion>Language switching works seamlessly</criterion>
+  </completion_criteria>
+</workflow_instructions>

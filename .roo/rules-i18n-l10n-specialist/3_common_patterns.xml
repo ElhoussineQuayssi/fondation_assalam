@@ -1,0 +1,193 @@
+<common_patterns>
+  <pattern name="i18n_provider_setup">
+    <description>Setting up the i18n provider in React applications</description>
+    <setup>
+      <npm>npm install react-i18next i18next i18next-browser-languagedetector</npm>
+      <config><![CDATA[
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: 'en',
+    debug: process.env.NODE_ENV === 'development',
+
+    interpolation: {
+      escapeValue: false,
+    },
+
+    resources: {
+      en: {
+        translation: {
+          "welcome": "Welcome",
+          "greeting": "Hello {{name}}"
+        }
+      },
+      fr: {
+        translation: {
+          "welcome": "Bienvenue",
+          "greeting": "Bonjour {{name}}"
+        }
+      }
+    }
+  });
+
+export default i18n;
+      ]]></config>
+    </setup>
+    <usage>For initializing i18n in React applications</usage>
+  </pattern>
+
+  <pattern name="translation_component">
+    <description>Using the useTranslation hook in React components</description>
+    <jsx>
+      import { useTranslation } from 'react-i18next';
+
+      function WelcomeMessage() {
+        const { t, i18n } = useTranslation();
+
+        return (
+          <div>
+            <h1>{t('welcome')}</h1>
+            <p>{t('greeting', { name: 'John' })}</p>
+            <button onClick={() => i18n.changeLanguage('fr')}>
+              {t('switch_to_french')}
+            </button>
+          </div>
+        );
+      }
+    </jsx>
+    <features>
+      <feature>t() function for simple translations</feature>
+      <feature>Interpolation with variables</feature>
+      <feature>Language switching capability</feature>
+    </features>
+  </pattern>
+
+  <pattern name="pluralization_support">
+    <description>Handling pluralization across different languages</description>
+    <translation_json>
+      {
+        "item_count": "{{count}} item",
+        "item_count_plural": "{{count}} items",
+        "item_count_interval": "(1){{count}} item|(2-7){{count}} items|(7-inf){{count}} items"
+      }
+    </translation_json>
+    <jsx>
+      import { useTranslation } from 'react-i18next';
+
+      function ItemList({ items }) {
+        const { t } = useTranslation();
+
+        return (
+          <p>
+            {t('item_count', { count: items.length })}
+          </p>
+        );
+      }
+    </jsx>
+    <note>react-i18next automatically handles pluralization based on language rules</note>
+  </pattern>
+
+  <pattern name="rtl_language_support">
+    <description>Supporting right-to-left languages in CSS and HTML</description>
+    <html>
+      <html dir="{{i18n.dir()}}">
+        <body>
+          <div className="content">
+            {content}
+          </div>
+        </body>
+      </html>
+    </html>
+    <css>
+      .content {
+        text-align: start; /* Instead of left */
+        margin-inline-start: 1rem; /* Instead of margin-left */
+        padding-inline-end: 1rem; /* Instead of padding-right */
+      }
+
+      /* RTL-specific adjustments */
+      [dir="rtl"] .icon-arrow {
+        transform: scaleX(-1);
+      }
+    </css>
+    <note>Use logical CSS properties (start/end instead of left/right)</note>
+  </pattern>
+
+  <pattern name="date_localization">
+    <description>Properly formatting dates for different locales</description>
+    <js>
+      import { useTranslation } from 'react-i18next';
+
+      function LocalizedDate({ date }) {
+        const { i18n } = useTranslation();
+
+        const formattedDate = new Intl.DateTimeFormat(i18n.language, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }).format(new Date(date));
+
+        return <span>{formattedDate}</span>;
+      }
+    </js>
+    <note>Use Intl.DateTimeFormat for proper locale-aware date formatting</note>
+  </pattern>
+
+  <pattern name="number_currency_formatting">
+    <description>Formatting numbers and currencies for different locales</description>
+    <js>
+      import { useTranslation } from 'react-i18next';
+
+      function PriceDisplay({ amount, currency = 'USD' }) {
+        const { i18n } = useTranslation();
+
+        const formattedPrice = new Intl.NumberFormat(i18n.language, {
+          style: 'currency',
+          currency: currency
+        }).format(amount);
+
+        return <span>{formattedPrice}</span>;
+      }
+
+      function NumberDisplay({ value }) {
+        const { i18n } = useTranslation();
+
+        const formattedNumber = new Intl.NumberFormat(i18n.language).format(value);
+
+        return <span>{formattedNumber}</span>;
+      }
+    </js>
+    <note>Use Intl.NumberFormat for proper locale-aware number formatting</note>
+  </pattern>
+
+  <pattern name="translation_extraction">
+    <description>Setting up automated translation key extraction</description>
+    <package_json>
+      "scripts": {
+        "extract-translations": "i18next 'src/**/*.{js,jsx,ts,tsx}' --output locales --languages en,fr,es"
+      },
+      "devDependencies": {
+        "i18next-parser": "^7.0.0"
+      }
+    </package_json>
+    <config>
+      // i18next-parser.config.js
+      module.exports = {
+        createOldCatalogs: false,
+        indentation: 2,
+        keepRemoved: false,
+        keySeparator: false,
+        locales: ['en', 'fr', 'es'],
+        namespaceSeparator: false,
+        output: 'locales/$LOCALE/$NAMESPACE.json',
+        input: 'src/**/*.{js,jsx,ts,tsx}',
+        sort: true
+      };
+    </config>
+  </pattern>
+</common_patterns>

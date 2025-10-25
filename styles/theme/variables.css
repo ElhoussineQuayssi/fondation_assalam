@@ -1,0 +1,210 @@
+/* Fondation Assalam - Theme Variables & Design Tokens
+   Generated: 2025-10-06 - Palette update and UI unification
+   Source: Brand palette tokens from design system
+*/
+
+:root {
+  /* Brand tokens (Serene Azure Palette) */
+  --color-primary: #5d8fbd; /* Tranquil Blue */
+  --color-primary-dark: #3a6b9b; /* Deep Comfort */
+  --color-primary-light: #a0c4e1; /* Hazy Blue */
+
+  --color-secondary: #a0c4e1; /* Hazy Blue */
+  --color-secondary-dark: #3a6b9b; /* Deep Comfort */
+  --color-secondary-light: #e1eff9; /* Soft Sky */
+
+  --color-accent: #a11721; /* Accent Red */
+  --color-accent-dark: #711017; /* Dark Accent */
+
+  /* Serene Azure Neutrals */
+  --bg: #f5f9fc; /* Polar Mist */
+  --surface: #e1eff9; /* Soft Sky */
+  --text: #4a4a4a; /* Charcoal Gray */
+  --muted: #767676; /* Dusty Gray */
+  --border: #a0c4e1; /* Hazy Blue */
+
+  /* Legacy support - map old tokens to new system */
+  --foundation-blue: var(--color-secondary);
+  --assalam-green: var(--color-primary);
+  --compassion-red: var(--color-accent);
+  --light-gray: var(--bg);
+  --medium-gray: var(--muted);
+  --dark-gray: var(--text);
+  --pure-white: var(--surface);
+
+  /* Typography scale */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+  --font-size-5xl: 3rem; /* 48px */
+
+  /* Spacing system */
+  --space-xs: 0.25rem; /* 4px */
+  --space-sm: 0.5rem; /* 8px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+
+  /* Border radius */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+
+  /* Z-index scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+/* Dark mode variants (for future implementation) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #f8fafc;
+    --muted: #64748b;
+    --border: #334155;
+
+    /* Keep brand colors consistent in dark mode */
+    /* --color-primary: #5DA453; (unchanged) */
+    /* --color-secondary: #0561A1; (unchanged) */
+    /* --color-accent: #A11721; (unchanged) */
+  }
+}
+
+/* Focus states for accessibility */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+  transition: outline-color var(--transition-fast);
+}
+
+/* Button variants */
+.btn-primary {
+  background: var(--color-primary-dark);
+  color: #ffffff;
+  border: none;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.btn-secondary {
+  background: var(--color-secondary);
+  color: #ffffff;
+  border: none;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--color-secondary-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Typography utilities */
+.text-heading {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.text-body {
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.text-muted {
+  font-size: var(--font-size-sm);
+  color: var(--muted);
+}
+
+/* Layout utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Form elements */
+.input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  background: var(--surface);
+  color: var(--text);
+  transition: all var(--transition-base);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(5, 97, 161, 0.1);
+}
+
+.input::placeholder {
+  color: var(--muted);
+}
