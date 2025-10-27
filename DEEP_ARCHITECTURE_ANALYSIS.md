@@ -30,7 +30,6 @@ This comprehensive analysis reveals a sophisticated Next.js 15 application built
 
 // Database & Backend
 "@supabase/supabase-js": "^2.75.0"
-"better-sqlite3": "^12.4.1"  // Legacy
 
 // UI & Styling
 "tailwindcss": "^3.4.17"
@@ -286,7 +285,7 @@ const variants = {
 
 **External Dependencies (52 packages):**
 - **Core Framework**: Next.js 15.5.5, React 18.3.1
-- **Database**: Supabase 2.75.0 (primary), better-sqlite3 (legacy)
+- **Database**: Supabase 2.75.0
 - **UI Framework**: Tailwind CSS 3.4.17 with custom design system
 - **Animation**: Framer Motion 12.23.22
 - **Forms**: React Hook Form 7.54.1 + Zod 3.24.1 validation
@@ -374,7 +373,7 @@ const HeavyComponent = dynamic(() => import("@/components/HeavyComponent"), {
 **Caching Strategy:**
 - **HTTP Caching**: 5min for API routes, 1year for static assets
 - **Client Caching**: Gallery images cached in browser memory
-- **Database Caching**: Query result caching in hooks
+- **Database Caching**: Query result caching in hooks (Supabase)
 - **Bundle Caching**: Tree shaking and code splitting
 
 **Loading States:**
@@ -393,15 +392,13 @@ const HeavyComponent = dynamic(() => import("@/components/HeavyComponent"), {
 
 ## Technical Debt Identified
 
-1. **Mixed Database Implementation**: Supabase (current) vs SQLite (legacy)
 2. **Inconsistent Function Patterns**: Some sync, some async implementations
 3. **Missing API Routes**: Referenced but not implemented endpoints
 4. **Environment Configuration**: Not fully optimized for production
 
 ## Recommendations
 
-1. **Consolidate Database Layer**: Remove SQLite code, use only Supabase
-2. **Complete API Routes**: Implement missing endpoints referenced in hooks
+1. **Complete API Routes**: Implement missing endpoints referenced in hooks
 3. **Environment Optimization**: Production-ready security and performance settings
 4. **Testing Strategy**: Add comprehensive test coverage for error scenarios
 5. **Documentation**: API documentation and component usage guides

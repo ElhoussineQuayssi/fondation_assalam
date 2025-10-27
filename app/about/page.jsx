@@ -1,6 +1,3 @@
-"use client";
-
-import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -27,7 +24,6 @@ import ValueCard from "@/components/ValueCard/ValueCard.jsx";
 import ContentCardAbout from "@/components/ContentCard/ContentCardAbout.jsx";
 import TeamMemberCard from "@/components/TeamMemberCard/TeamMemberCard.jsx";
 import { getRandomGalleryImages } from "@/lib/utils";
-import { useAsync } from '@/hooks/use-enhanced';
 import {
   Timeline,
   TimelineItem,
@@ -37,16 +33,9 @@ import {
   TimelineDescription,
 } from "@/components/Timeline/Timeline.jsx";
 
-export default function AboutUs() {
-  // Use the project's standard useAsync hook for resilient data fetching
-  const {
-    data: galleryImagesData,
-    loading: loadingImages,
-    error: imageError
-  } = useAsync(
-    () => getRandomGalleryImages(4),
-    [] // Runs only once on mount
-  );
+export default async function AboutUs() {
+  // Fetch gallery images server-side
+  const galleryImagesData = await getRandomGalleryImages(4);
 
   // SEO Breadcrumbs for About page
   const breadcrumbs = [
@@ -213,7 +202,7 @@ const partnershipsData = [
               </p>
             </>
           }
-          imageSrc={loadingImages || !galleryImagesData || galleryImagesData.length === 0 ? '/placeholder.svg?height=400&width=600' : galleryImagesData[0]}
+          imageSrc={!galleryImagesData || galleryImagesData.length === 0 ? '/placeholder.svg?height=400&width=600' : galleryImagesData[0]}
           imageAlt="Histoire de la fondation Assalam"
           layout="image-left"
         />
@@ -401,7 +390,7 @@ const partnershipsData = [
                         ? "Chef des Opérations Sociales"
                         : "Chef de la Transformation Numérique"
                 }
-                imageSrc={loadingImages || !galleryImagesData || galleryImagesData.length === 0 ? '/placeholder.svg?height=400&width=600' : galleryImagesData[id-1]}
+                imageSrc={!galleryImagesData || galleryImagesData.length === 0 ? '/placeholder.svg?height=400&width=600' : galleryImagesData[id-1]}
                 imageAlt={`Membre de l'équipe ${id}`}
               />
             ))}

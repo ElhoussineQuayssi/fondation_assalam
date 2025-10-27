@@ -9,6 +9,7 @@ import ContentGrid from "@/components/ContentGrid/ContentGrid";
 import ContentCard from "@/components/ContentCard/ContentCard";
 import Container from "@/components/Container/Container";
 import Button from "@/components/Button/Button";
+import { FlipCard } from "@/components/FlipCard.jsx";
 import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary";
 import { LoadingError } from "@/components/ErrorFallback/ErrorFallback";
 import { ProjectCardSkeleton } from "@/components/Loading/Loading";
@@ -165,14 +166,46 @@ export default async function ProjectsPage() {
               items={projects}
               columns={{ default: 1, md: 2, lg: 3 }}
               renderItem={(project, index) => (
-                <ContentCard
+                <FlipCard
                   key={index}
-                  title={project.title}
-                  excerpt={project.excerpt}
-                  image={project.image}
-                  imageAlt={project.imageAlt}
-                  link={project.link}
                   index={index}
+                  frontContent={
+                    <div className="w-full h-full bg-white rounded-xl p-6 shadow-lg border-t-4 border-opacity-70 text-center transition-all duration-300" style={{ borderColor: "#6495ED" }}>
+                      <div className="relative h-48 w-full mb-4 rounded-lg overflow-hidden">
+                        <Image
+                          src={project.image}
+                          alt={project.imageAlt}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          style={{ objectFit: "cover" }}
+                          className="grayscale hover:grayscale-0 transition-all duration-300"
+                          priority={index === 0}
+                          placeholder="blur"
+                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjWjBqO6O2mhP//Z"
+                        />
+                      </div>
+                      <h4 className="text-xl font-bold mb-2" style={{ color: "#333333" }}>
+                        {project.title}
+                      </h4>
+                      <p className="text-gray-700 text-sm mb-4">{project.excerpt}</p>
+                      <p className="text-xs text-gray-500">Cliquez pour en savoir plus</p>
+                    </div>
+                  }
+                  backContent={
+                    <div className="w-full h-full bg-white rounded-xl p-6 shadow-lg border-t-4 border-opacity-70 text-center transition-all duration-300 flex flex-col justify-center" style={{ borderColor: "#6495ED" }}>
+                      <h4 className="text-xl font-bold mb-4" style={{ color: "#333333" }}>
+                        {project.title}
+                      </h4>
+                      <p className="text-gray-700 text-sm mb-6 flex-grow">{project.excerpt}</p>
+                      <Link
+                        href={project.link}
+                        className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+                        style={{ backgroundColor: "#6495ED", color: "white" }}
+                      >
+                        Voir le projet complet
+                      </Link>
+                    </div>
+                  }
                 />
               )}
             />

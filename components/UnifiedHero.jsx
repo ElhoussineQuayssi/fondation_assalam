@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Heart, Users, Target, ChevronDown } from "lucide-react";
 import Image from "next/image"
+import LoadingSpinner from "./LoadingSpinner/LoadingSpinner";
 // Removed imports: Image from "next/image" and Button from "./Button/Button"
 
 // --- Sub-Components (Concise & Grou
@@ -101,6 +102,9 @@ const UnifiedHero = ({
 }) => {
   const words = typeof title === 'string' ? title.split(" ") : [];
 
+  // Fallback image for failed loads
+  const FALLBACK_IMAGE = "https://placehold.co/1200x800/cccccc/000000?text=Image+Unavailable";
+
   // FIX: Use useMemo to ensure random image selection runs only once per component mount,
   // generating a new random image each time the page is loaded/visited.
   // This bypasses the client-side caching in getRandomGalleryImages for true randomization.
@@ -120,6 +124,9 @@ const UnifiedHero = ({
   // Slideshow state
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false); // New state to control fade-to-black
+  const [imageLoaded, setImageLoaded] = useState(false); // Loading state for hero image
+  const [isUsingFallback, setIsUsingFallback] = useState(false); // Track if using fallback image
+  const [currentImageSrc, setCurrentImageSrc] = useState(selectedImages[0] || FALLBACK_IMAGE); // Current image source
 
   // Slideshow effect (Fixed Transition Logic)
   useEffect(() => {
@@ -138,6 +145,12 @@ const UnifiedHero = ({
       const transitionTimer = setTimeout(() => {
         // A. Update the index while the screen is black
         setCurrentIndex((prev) => (prev + 1) % selectedImages.length);
+        // Reset loading state for new image
+        setImageLoaded(false);
+        // Reset fallback state for new image
+        setIsUsingFallback(false);
+        // Update current image source
+        setCurrentImageSrc(selectedImages[currentIndex]);
 
         // B. Start the visual fade-in (overlay opacity decreases to 0.3)
         setIsFading(false);
@@ -148,6 +161,13 @@ const UnifiedHero = ({
 
     return () => clearInterval(interval);
   }, [selectedImages?.length]);
+
+  // Initialize current image source
+  useEffect(() => {
+    if (selectedImages && selectedImages.length > 0) {
+      setCurrentImageSrc(selectedImages[0]);
+    }
+  }, [selectedImages]);
 
   // Fallback for primary button style (ACCENT_BLUE: #6495ED, DARK_TEXT: #333333)
   const getButtonStyle = (variant) => {
@@ -183,16 +203,31 @@ const UnifiedHero = ({
       {/* Background Slideshow (Now uses a single Image element from Next.js) */}
       {selectedImages && selectedImages.length > 0 && (
         <div className="absolute inset-0">
+          {/* Loading Spinner while image loads */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-blue-900">
+              <LoadingSpinner />
+            </div>
+          )}
           {/* Single Image Element - Source changes instantly while obscured */}
           <Image
             // Use key to hint React that this is a new element (optional but good practice)
             key={currentIndex}
-            src={selectedImages[currentIndex]}
+            src={isUsingFallback ? FALLBACK_IMAGE : currentImageSrc}
             alt="Hero background"
             // The image is always visible (opacity 1) within the container
             fill
             className="object-cover"
             priority
+            onLoad={() => setImageLoaded(true)}
+            onError={() => {
+              // If primary image fails and not already using fallback, switch to fallback
+              if (!isUsingFallback) {
+                setIsUsingFallback(true);
+                setCurrentImageSrc(FALLBACK_IMAGE);
+              }
+              setImageLoaded(true); // Mark as loaded even on error to hide spinner
+            }}
           />
         </div>
       )}
