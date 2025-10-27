@@ -150,7 +150,7 @@ export default async function ProjectsPage() {
         >
           <SectionHeader
             title="Nos Projets Principaux"
-            subtitle=""
+            subtitle="Découvrez nos initiatives qui transforment des vies à travers le Maroc"
             size="small"
             centered={true}
           />

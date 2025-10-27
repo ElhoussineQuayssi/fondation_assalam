@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Heart, Users, Target, ChevronDown } from "lucide-react";
 import Image from "next/image"
 // Removed imports: Image from "next/image" and Button from "./Button/Button"
@@ -81,9 +81,10 @@ const StyleInjector = () => (
 // --- Main Component ---
 
 /**
- * UnifiedHero Component
- * Fixed the background image transition using a robust "Fade-to-Black" logic.
- */
+  * UnifiedHero Component
+  * Fixed the background image transition using a robust "Fade-to-Black" logic.
+  * Random image selection now uses useMemo to ensure fresh randomization on each component mount.
+  */
 const UnifiedHero = ({
     title = "Powerful Digital Solutions for Tomorrow",
     subtitle = "Experience advanced, scalable web development services tailored to accelerate your growth and mission success.",
@@ -100,13 +101,29 @@ const UnifiedHero = ({
 }) => {
   const words = typeof title === 'string' ? title.split(" ") : [];
 
+  // FIX: Use useMemo to ensure random image selection runs only once per component mount,
+  // generating a new random image each time the page is loaded/visited.
+  // This bypasses the client-side caching in getRandomGalleryImages for true randomization.
+  const selectedImages = useMemo(() => {
+    if (!images || images.length === 0) {
+      return [
+        "https://placehold.co/1200x800/222244/FFFFFF?text=Digital+Landscape",
+        "https://placehold.co/1200x800/442222/FFFFFF?text=Innovation+Focus",
+      ];
+    }
+
+    // If we have images, shuffle them to create a random order for this component mount
+    const shuffled = [...images].sort(() => Math.random() - 0.5);
+    return shuffled;
+  }, []); // Empty dependency array ensures this runs only once per component mount
+
   // Slideshow state
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false); // New state to control fade-to-black
 
   // Slideshow effect (Fixed Transition Logic)
   useEffect(() => {
-    if (!images || images.length <= 1) return;
+    if (!selectedImages || selectedImages.length <= 1) return;
 
     // The duration of the CSS transition for the overlay (1000ms)
     const TRANSITION_DURATION = 1000;
@@ -120,7 +137,7 @@ const UnifiedHero = ({
       // 2. Schedule the source update and fade-in (after transition duration)
       const transitionTimer = setTimeout(() => {
         // A. Update the index while the screen is black
-        setCurrentIndex((prev) => (prev + 1) % images.length);
+        setCurrentIndex((prev) => (prev + 1) % selectedImages.length);
 
         // B. Start the visual fade-in (overlay opacity decreases to 0.3)
         setIsFading(false);
@@ -130,7 +147,7 @@ const UnifiedHero = ({
     }, INTERVAL_TIME);
 
     return () => clearInterval(interval);
-  }, [images?.length]);
+  }, [selectedImages?.length]);
 
   // Fallback for primary button style (ACCENT_BLUE: #6495ED, DARK_TEXT: #333333)
   const getButtonStyle = (variant) => {
@@ -164,13 +181,13 @@ const UnifiedHero = ({
         suppressHydrationWarning
       >
       {/* Background Slideshow (Now uses a single Image element from Next.js) */}
-      {images && images.length > 0 && (
+      {selectedImages && selectedImages.length > 0 && (
         <div className="absolute inset-0">
           {/* Single Image Element - Source changes instantly while obscured */}
           <Image
             // Use key to hint React that this is a new element (optional but good practice)
             key={currentIndex}
-            src={images[currentIndex]}
+            src={selectedImages[currentIndex]}
             alt="Hero background"
             // The image is always visible (opacity 1) within the container
             fill
