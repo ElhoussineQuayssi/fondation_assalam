@@ -6,7 +6,7 @@ const SectionHeader = ({ title, subtitle }) => (
     >
       {title}
     </h2>
-    {subtitle && (
+    {subtitle && subtitle.trim() !== "" && (
       <p
         className={`text-lg mt-4 max-w-2xl mx-auto`}
         style={{ color: "#333333" }}

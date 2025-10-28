@@ -27,6 +27,16 @@ const nextConfig = {
         hostname: "hpymvpexiunftdgeobiw.supabase.co",
         pathname: "/storage/v1/render/image/public/**",
       },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "assalam.org",
+        pathname: "/**",
+      },
     ],
   },
 
