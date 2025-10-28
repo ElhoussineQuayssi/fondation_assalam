@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import {
   Target,
   Eye,
@@ -13,16 +16,11 @@ import {
   Clock,
 } from "lucide-react";
 import { generateOrganizationSchema, generateBreadcrumbSchema } from "@/lib/seo";
+import { getRandomGalleryImages } from "@/lib/utils";
 
 // Import extracted components
 import Container from "@/components/Container/Container.jsx";
-import { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary.jsx";
-
-// Dynamic import for UnifiedHero with ssr: false to resolve image loading issues
-const UnifiedHero = dynamic(() => import("@/components/UnifiedHero.jsx"), {
-  ssr: false,
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-lg" />
-});
+import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary.jsx";
 import SectionWithBackground from "@/components/SectionWithBackground/SectionWithBackground.jsx";
 import ImageTextSectionAbout from "@/components/ImageTextSection/ImageTextSectionAbout.jsx";
 import StatsCardAbout from "@/components/StatsCard/StatsCardAbout.jsx";
@@ -38,6 +36,12 @@ import {
   TimelineTitle,
   TimelineDescription,
 } from "@/components/Timeline/Timeline.jsx";
+
+// Dynamic import for UnifiedHero with ssr: false to resolve image loading issues
+const UnifiedHero = dynamic(() => import("@/components/UnifiedHero.jsx"), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-lg" />
+});
 
 export default function AboutUs() {
 
@@ -74,7 +78,6 @@ const BACKGROUND = "#FAFAFA"; // Off-White
 // - Timeline
 // - TimelineItem
 // - TimelineTime
-// - TimelineContent
 // - TimelineTitle
 // - TimelineDescription
 
@@ -172,6 +175,7 @@ const partnershipsData = [
     const [loadingImages, setLoadingImages] = useState(true);
     const [imageError, setImageError] = useState(null);
     const [heroImages, setHeroImages] = useState([]);
+    const [galleryImagesData, setGalleryImagesData] = useState([]);
   // Enhanced image fetching with better error handling
     useEffect(() => {
       const fetchImages = async () => {
@@ -183,17 +187,21 @@ const partnershipsData = [
           // Get 6 random images for the hero
           const heroImgs = await getRandomGalleryImages(6);
           setHeroImages(heroImgs);
+          // Get 4 random images for gallery data
+          const galleryImgs = await getRandomGalleryImages(4);
+          setGalleryImagesData(galleryImgs);
         } catch (error) {
           console.error('Failed to fetch gallery images:', error);
           setImageError('Impossible de charger les images. Utilisation des images par défaut.');
           // Fallback to placeholder
           setFallbackImages(Array(6).fill('/placeholder.svg?height=400&width=600'));
           setHeroImages(Array(4).fill('/placeholder.svg?height=400&width=600'));
+          setGalleryImagesData(Array(4).fill('/placeholder.svg?height=400&width=600'));
         } finally {
           setLoadingImages(false);
         }
       };
-  
+
       fetchImages();
     }, []);
   return (
