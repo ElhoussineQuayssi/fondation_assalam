@@ -200,9 +200,8 @@ export async function getProjects() {  // Supabase implementation
   return projects;
 }
 
-export async function addProject(project) {  // Legacy SQLite implementation
-  const db = await getDb();  // This function doesn't exist in current codebase
-  // SQLite insertion code
+export async function addProject(project) {  // Now uses Supabase
+  // Supabase insertion code
 }
 ```
 

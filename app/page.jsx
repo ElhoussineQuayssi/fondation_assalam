@@ -76,8 +76,8 @@ export default function Home() {
         // Get 6 random images for the fallback projects
         const images = await getRandomGalleryImages(6);
         setFallbackImages(images);
-        // Get 4 random images for the hero
-        const heroImgs = await getRandomGalleryImages(4);
+        // Get 6 random images for the hero
+        const heroImgs = await getRandomGalleryImages(6);
         setHeroImages(heroImgs);
       } catch (error) {
         console.error('Failed to fetch gallery images:', error);

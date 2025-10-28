@@ -21,7 +21,13 @@ import {
 import Input from "@/components/Input/Input";
 import Textarea from "@/components/Textarea/Textarea";
 import FileUpload from "@/components/FileUpload/FileUpload";
-import UnifiedHero from "@/components/UnifiedHero";
+import dynamic from "next/dynamic";
+
+// Dynamic import for UnifiedHero with ssr: false to resolve image loading issues
+const UnifiedHero = dynamic(() => import("@/components/UnifiedHero"), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-lg" />
+});
 // --- Design System Configuration (Minimalist Light Blue) ---
 const ACCENT = "#6495ED"; // Cornflower Blue
 const PRIMARY_LIGHT = "#B0E0E6"; // Powder Blue
@@ -34,6 +40,7 @@ function ContactContent() {
 
   useEffect(() => {
     setClientType(searchParams.get('type') || 'contact');
+    e.preventDefault()
   }, [searchParams]);
 
   const projects = [
